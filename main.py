@@ -1,4 +1,4 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import hashlib
 import time
 import getpass
@@ -6,20 +6,20 @@ import getpass
 localTime = time.asctime(time.localtime(time.time()))
 timeout = time.time() + 10
 
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
 #####Green Light#####
-#GPIO.setup(11, GPIO.OUT)
-#GPIO.output(11, True)
+GPIO.setup(11, GPIO.OUT)
+GPIO.output(11, True)
 #####Red Light#####
-#GPIO.setup(13, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
 #####Blue Light####
-#GPIO.setup(15, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
 
 ######Reads the database file so it can be authenticated in the program
 def readDB():
 	DB = []
-	f = open("hashDB.txt","r")
+	f = open("DB.txt","r")
 	while True:
 		AUTH = f.readline()
 		AUTH = AUTH.strip()
@@ -36,7 +36,7 @@ def readDB():
 ######Reads the admin database to lookfor any admin cards
 def readADB():
 	adminDB = []
-	f = open("HashAdminDB.txt","r")
+	f = open("AdminDB.txt","r")
 	while True:
 		admin = f.readline()
 		admin = admin.strip()
@@ -52,15 +52,15 @@ def readADB():
 #readDB()
 #####Allows for this function to be called when the LEDs wanted to be flashed
 def flash(x):
-		#GPIO.output(11, True)
-		#GPIO.output(13, True)
+		GPIO.output(11, True)
+		GPIO.output(13, True)
 		time.sleep(x)
-		#GPIO.output(11, False)
-		#GPIO.output(13, False)
+		GPIO.output(11, False)
+		GPIO.output(13, False)
 
 ######Main loop for the program
 while True:
-	#GPIO.output(11, True)
+	GPIO.output(11, True)
 	#readDB()
 	###Reads input from the card reader
 	#rawCard = getpass.getpass("Swipe Card: ")
@@ -79,16 +79,16 @@ while True:
 			log.write("")
 			log.close()
 		#####Green LED lights up to show that the userhas been granted access
-		#GPIO.output(11, False)
-		#time.sleep(3)
-		#GPIO.output(11, True)
+		GPIO.output(11, False)
+		time.sleep(3)
+		GPIO.output(11, True)
 
 
 	elif formCard in readADB(): ##Checks if the card is on the adminDB for admin mode
 		while True:
 			#Add timeout incase admin mode is left
 			######Turns on the BLUE light to show that the reader is in admin mode
-			#GPIO.output(15, True)
+			GPIO.output(15, True)
 			print("#####Admin Mode#####")
 			##Swipe card 3 times incase a bad swipe
 
@@ -117,7 +117,7 @@ while True:
 					####Flash green and red LED to show the card was properly read
 					flash(1)
 					###Adds the card to the DB
-					with open('hashDB.txt','a') as db:
+					with open('DB.txt','a') as db:
 						swipe3 = hashlib.md5(swipe3.encode())
 						swipe3 = swipe3.hexdigest()
 
@@ -132,7 +132,7 @@ while True:
 						log.close()
 
 					##Turn off admin mode
-					#GPIO.output(15, False)
+					GPIO.output(15, False)
 				break
 			else:
 				continue
@@ -146,6 +146,6 @@ while True:
 			log.close()
 
 		#####Lights up a RED light to show the user has a bad swipe
-		#GPIO.output(13, True)
-		#time.sleep(1)
-		#GPIO.output(13, False)
+		GPIO.output(13, True)
+		time.sleep(1)
+		GPIO.output(13, False)
