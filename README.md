@@ -2,6 +2,8 @@
 Rose State access control:
 *meant to be ran on a Raspberry pi*
 
+We had an incident at Rose State, to prvent any future incidents we wanted to implement a form of access control. Since every student had an ID with a mag stripe I used that as authentication. The GPIO pins are connected to a relay board that is also connected to a electric door strike and a 12v power supply. This system can be implemented on any door, and instead of using a door strike you can use anything that will open the door with a signal.
+
 1.main.py
  - Waits on input from a card reader.
  - Hashes the card number and compares it to the allowed cards on DB.txt
