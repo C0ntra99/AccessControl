@@ -1,4 +1,7 @@
 # AccessControl
+
+*Program has been updated, have not had time to update github* 
+
 Rose State access control:
 *meant to be ran on a Raspberry pi*
 
@@ -24,3 +27,4 @@ We had an incident at Rose State, to prvent any future incidents we wanted to im
 5.AdminDB.txt:
   - Database of Administrator cards.
   - Only card in there is "4321"
+
